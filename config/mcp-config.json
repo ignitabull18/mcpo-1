@@ -1,5 +1,123 @@
 {
   "mcpServers": {
+    "coolify": {
+      "command": "npx",
+      "args": ["-y", "coolify-mcp-server"],
+      "env": {
+        "COOLIFY_BASE_URL": "COOLIFY_BASE_URL",
+        "COOLIFY_TOKEN": "COOLIFY_TOKEN"
+      }
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "$SUPABASE_ACCESS_TOKEN"
+      ]
+    },
+    "browser-tools-mcp": {
+      "command": "npx",
+      "args": ["-y", "@agentdeskai/browser-tools-mcp@1.2.0"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "GITHUB_PERSONAL_ACCESS_TOKEN"
+      }
+    },
+    "n8n": {
+      "command": "npx",
+      "args": ["-y", "n8n-mcp-server"],
+      "env": {
+        "N8N_API_URL": "N8N_API_URL",
+        "N8N_API_KEY": "N8N_API_KEY",
+        "N8N_WEBHOOK_USERNAME": "N8N_WEBHOOK_USERNAME",
+        "N8N_WEBHOOK_PASSWORD": "N8N_WEBHOOK_PASSWORD"
+      }
+    },
+    "toolbox": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@smithery/toolbox",
+        "--key",
+        "$SMITHERY_API_KEY",
+        "--profile",
+        "$SMITHERY_PROFILE"
+      ]
+    },
+    "taskmaster-ai": {
+      "command": "npx",
+      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
+      "env": {
+        "ANTHROPIC_API_KEY": "ANTHROPIC_API_KEY",
+        "PERPLEXITY_API_KEY": "PERPLEXITY_API_KEY",
+        "OPENAI_API_KEY": "OPENAI_API_KEY",
+        "GOOGLE_API_KEY": "GOOGLE_API_KEY",
+        "MISTRAL_API_KEY": "MISTRAL_API_KEY",
+        "OPENROUTER_API_KEY": "OPENROUTER_API_KEY",
+        "XAI_API_KEY": "XAI_API_KEY",
+        "AZURE_OPENAI_API_KEY": "AZURE_OPENAI_API_KEY"
+      }
+    },
+    "firecrawl-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@Krieg2065/firecrawl-mcp-server",
+        "--key",
+        "$SMITHERY_API_KEY",
+        "--profile",
+        "$SMITHERY_PROFILE"
+      ]
+    },
+    "jina-ai-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "jina-ai-mcp-server",
+        "--key",
+        "$SMITHERY_API_KEY",
+        "--profile",
+        "$SMITHERY_JINA_PROFILE"
+      ]
+    },
+    "kit-mcp": {
+      "command": "npx",
+      "args": ["-y", "kit-mcp"],
+      "env": {
+        "OPENAI_API_KEY": "OPENAI_API_KEY"
+      }
+    },
+    "openmemory": {
+      "type": "sse",
+      "url": "https://openmemory-api.ignitabull.org/mcp/cursor/sse/root"
+    },
+    "mindsdb": {
+      "type": "sse",
+      "url": "http://mindsdb.ignitabull.org:47337/sse"
+    },
+    "deepwiki": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.deepwiki.com/sse"
+      ]
+    },
     "fetch": {
       "command": "uvx",
       "args": ["mcp-server-fetch"]
@@ -25,13 +143,6 @@
       "args": ["-y", "@modelcontextprotocol/server-brave-search"],
       "env": {
         "BRAVE_API_KEY": "BRAVE_API_KEY"
-      }
-    },
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "GITHUB_PERSONAL_ACCESS_TOKEN"
       }
     },
     "slack": {
