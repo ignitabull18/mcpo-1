@@ -17,7 +17,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 # Confirm npm and node versions (optional debugging info)
 RUN node -v && npm -v
 
-# Copy your mcpo source code (assuming in src/mcpo)
+# Copy mcpo source code
 COPY . /app
 WORKDIR /app
 
@@ -29,14 +29,21 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 # Install mcpo (assuming pyproject.toml is properly configured)
 RUN uv pip install . && rm -rf ~/.cache
 
+# Create directories for data and logs
+RUN mkdir -p /app/data /app/logs
+
 # Verify mcpo installed correctly
 RUN which mcpo
 
-# Expose port (optional but common default)
+# Expose port
 EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:8000/docs || exit 1
 
 # Entrypoint set for easy container invocation
 ENTRYPOINT ["mcpo"]
 
-# Default help CMD (can override at runtime)
-CMD ["--help"]
+# Default command with proper configuration for production use
+CMD ["--host", "0.0.0.0", "--port", "8000", "--config", "/app/config/mcp-config.json"]
