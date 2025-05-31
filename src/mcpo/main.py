@@ -8,6 +8,7 @@ from typing import Optional
 import uvicorn
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.sse import sse_client
 from mcp.client.stdio import stdio_client
@@ -195,6 +196,22 @@ async def run(
         ssl_keyfile=ssl_keyfile,
         lifespan=lifespan,
     )
+
+    # Add health check endpoint
+    @main_app.get("/", tags=["Health"])
+    @main_app.get("/health", tags=["Health"])
+    async def health_check():
+        """Health check endpoint for monitoring and load balancers"""
+        return JSONResponse(
+            status_code=200,
+            content={
+                "status": "healthy",
+                "service": "MCPO",
+                "version": version,
+                "message": "MCP OpenAPI Proxy is running",
+                "docs_url": "/docs"
+            }
+        )
 
     main_app.add_middleware(
         CORSMiddleware,
