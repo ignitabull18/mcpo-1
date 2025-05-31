@@ -1,0 +1,45 @@
+services:
+  mcpo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcpo-server
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Core MCPO settings
+      - MCPO_API_KEY=${MCPO_API_KEY}
+      
+      # Optional API keys (only set if you plan to use these services)
+      - BRAVE_API_KEY=${BRAVE_API_KEY:-}
+      - TAVILY_API_KEY=${TAVILY_API_KEY:-}
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN:-}
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - AMAP_MAPS_API_KEY=${AMAP_MAPS_API_KEY:-}
+      - BAIDU_MAP_API_KEY=${BAIDU_MAP_API_KEY:-}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+    volumes:
+      - mcpo_data:/app/data
+      - mcpo_logs:/app/logs
+    networks:
+      - mcpo_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  mcpo_data:
+    driver: local
+  mcpo_logs:
+    driver: local
+
+networks:
+  mcpo_network:
+    driver: bridge
