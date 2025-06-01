@@ -46,4 +46,5 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 ENTRYPOINT ["mcpo"]
 
 # Default command with proper configuration for production use
-CMD ["--host", "0.0.0.0", "--port", "8000", "--config", "/app/config/mcp-config.json"]
+CMD CMD ["--host", "0.0.0.0", "--port", "8000", "--api-key", "$MCPO_API_KEY", "--config", "/app/config/mcp-config.json"]
+
